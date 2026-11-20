@@ -17,12 +17,12 @@ const int chipSelect = BUILTIN_SDCARD;
 namespace qn = qindesign::network;
 qn::EthernetClient client;
 
-const IPAddress staticIP(192, 168, 1, 100);    // Teensy's forced IP address
+const IPAddress staticIP(10, 15, 143, 101);    // Teensy's forced IP address
 const IPAddress netmask(255, 255, 255, 0);     // Must match laptop
-const IPAddress gateway(192, 168, 1, 1);       // Dummy gateway
+const IPAddress gateway(0, 0, 0, 0);       // Dummy gateway
 
 // change this to laptop ethernet ip address
-const char* serverIP = "192.168.1.10";
+const char* serverIP = "10.15.143.100";
 extern const int serverPort = 5002;
 
 File logFile;
@@ -127,7 +127,7 @@ void setup() {
 
     //loadcell calibration and interrupt (grams)
     thrustHX711.begin(ActivePins::THRUST_DOUT_PIN, ActivePins::THRUST_SCK_PIN);
-    thrustHX711.set_scale(221.65);
+    thrustHX711.set_scale(22.165);
     // thrustHX711.tare();
     attachInterrupt(digitalPinToInterrupt(ActivePins::THRUST_DOUT_PIN), thrustHX711ISR, FALLING);
 
@@ -256,18 +256,18 @@ void loop() {
 
             streamDataRow(currentFrame);
 
-            if (printTimer >= printInterval) {
-                printTimer = 0;
-                String msg = 
-                        String(currentFrame.timestamp) + "," +
-                        String(currentFrame.servoAngle) + "," +
-                        String(currentFrame.scaleReading, 4) + "," +
-                        String(currentFrame.thrustReading, 4) + "," +
-                        String(currentFrame.pt1Reading) + "," +
-                        String(currentFrame.pt2Reading) + "\n";
+            // if (printTimer >= printInterval) {
+            //     printTimer = 0;
+            //     String msg = 
+            //             String(currentFrame.timestamp) + "," +
+            //             String(currentFrame.servoAngle) + "," +
+            //             String(currentFrame.scaleReading, 4) + "," +
+            //             String(currentFrame.thrustReading, 4) + "," +
+            //             String(currentFrame.pt1Reading) + "," +
+            //             String(currentFrame.pt2Reading) + "\n";
 
-                Serial.print(msg);
-            }
+            //     Serial.print(msg);
+            // }
         }
     }
 
